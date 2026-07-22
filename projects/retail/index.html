@@ -1,0 +1,31 @@
+---
+layout: project
+project: retail
+page_type: overview
+active: Projects
+title: "Retail Sales Analytics Pipeline"
+---
+<div class="toc">
+  <div class="toc-title">Contents</div>
+  <ol>
+    <li><a href="architecture.html">Architecture</a></li>
+    <li><a href="implementation.html">Implementation</a></li>
+    <li><a href="source-code.html">Source code</a></li>
+    <li><a href="screenshots.html">Screenshots</a></li>
+    <li><a href="lessons-learned.html">Lessons learned</a></li>
+  </ol>
+</div>
+
+<p>A batch ETL pipeline that ingests daily retail sales files and turns them into
+analytics-ready tables: sales by store, by category, and by day, plus supporting dimension
+tables for products and stores.</p>
+
+<p>Apache Airflow owns the orchestration &mdash; sensing for new daily files, kicking off
+PySpark transformation jobs for each Medallion layer, running data-quality checks between
+layers, and alerting on failure. Curated Gold tables are queried through Athena and Redshift
+depending on the use case.</p>
+
+<h2>Why this project</h2>
+<p>Built to practice production concerns that toy pipelines usually skip: DAG idempotency,
+backfilling historical partitions, and handling a schedule that has to run reliably every
+day rather than once.</p>

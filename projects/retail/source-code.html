@@ -1,0 +1,53 @@
+---
+layout: project
+project: retail
+page_type: source-code
+active: Projects
+title: "Retail Sales Analytics Pipeline — Source Code"
+subtitle: "Source Code"
+---
+<div class="stub-note">Representative excerpts shown here. Full source lives in the project's GitHub repository &mdash; link to be added.</div>
+<h2>Key snippets</h2>
+<h3>Airflow DAG structure (excerpt)</h3>
+<pre><code>from airflow import DAG
+from airflow.sensors.filesystem import FileSensor
+from airflow.operators.python import PythonOperator
+from datetime import datetime
+
+with DAG(
+    "retail_sales_pipeline",
+    schedule_interval="@daily",
+    start_date=datetime(2026, 1, 1),
+    catchup=True,
+) as dag:
+
+    wait_for_files = FileSensor(
+        task_id="wait_for_daily_files",
+        filepath="/data/raw/{{ ds }}/",
+        poke_interval=300,
+        timeout=3600,
+    )
+
+    bronze_task = PythonOperator(
+        task_id="load_bronze",
+        python_callable=run_bronze_job,
+        op_kwargs={"ds": "{{ ds }}"},
+    )
+
+    wait_for_files &gt;&gt; bronze_task
+</code></pre>
+<h3>PySpark: daily sales aggregation</h3>
+<pre><code>sales_by_store = (
+    silver_df
+    .groupBy("sale_date", "store_id", "category")
+    .agg(
+        F.sum("line_total").alias("total_sales"),
+        F.countDistinct("order_id").alias("order_count"),
+    )
+)
+
+(sales_by_store.write
+    .mode("overwrite")
+    .partitionBy("sale_date")
+    .parquet("s3://retail-pipeline/gold/sales_by_store/"))
+</code></pre>

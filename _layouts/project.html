@@ -1,0 +1,25 @@
+---
+layout: default
+---
+{% assign proj = site.data.projects | where: "slug", page.project | first %}
+<div class="infobox">
+  <div class="cap">{{ proj.title }}</div>
+  <table>
+  {% for row in proj.infobox %}
+    <tr><th>{{ row[0] }}</th><td>{{ row[1] }}</td></tr>
+  {% endfor %}
+  </table>
+</div>
+
+<h1 class="title">{{ proj.title }}</h1>
+
+<div class="subnav">
+  <a class="{% if page.page_type == 'overview' %}current{% endif %}" href="{{ site.baseurl }}/projects/{{ proj.slug }}/">Overview</a>
+  <a class="{% if page.page_type == 'architecture' %}current{% endif %}" href="{{ site.baseurl }}/projects/{{ proj.slug }}/architecture.html">Architecture</a>
+  <a class="{% if page.page_type == 'implementation' %}current{% endif %}" href="{{ site.baseurl }}/projects/{{ proj.slug }}/implementation.html">Implementation</a>
+  <a class="{% if page.page_type == 'source-code' %}current{% endif %}" href="{{ site.baseurl }}/projects/{{ proj.slug }}/source-code.html">Source Code</a>
+  <a class="{% if page.page_type == 'screenshots' %}current{% endif %}" href="{{ site.baseurl }}/projects/{{ proj.slug }}/screenshots.html">Screenshots</a>
+  <a class="{% if page.page_type == 'lessons-learned' %}current{% endif %}" href="{{ site.baseurl }}/projects/{{ proj.slug }}/lessons-learned.html">Lessons Learned</a>
+</div>
+
+{{ content }}

@@ -1,0 +1,15 @@
+---
+layout: project
+project: weather
+page_type: lessons-learned
+active: Projects
+title: "Weather Data Pipeline — Lessons Learned"
+subtitle: "Lessons Learned"
+---
+<h2>What I'd tell someone starting this project</h2>
+<ul>
+<li>The pandas Lambda layer alone gets close to Lambda's unzipped size limit, so pinning a slim pandas build and stripping test/doc files from the layer was necessary.</li>
+<li>Most early failures were CloudFormation stack rollbacks caused by small IAM permission gaps &mdash; reading the failed-resource reason in the console became step one for every debug session.</li>
+<li>Keeping the fetch and transform logic in one Lambda kept the project simple, but a follow-up version would likely split them so a transform bug doesn't require re-fetching from the API.</li>
+<li>Storing the AWS deploy role as a GitHub Actions secret (rather than long-lived access keys) made the CI/CD loop noticeably less risky to leave running unattended.</li>
+</ul>

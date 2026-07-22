@@ -1,0 +1,31 @@
+---
+layout: project
+project: banking
+page_type: overview
+active: Projects
+title: "Banking KYC Pipeline"
+---
+<div class="toc">
+  <div class="toc-title">Contents</div>
+  <ol>
+    <li><a href="architecture.html">Architecture</a></li>
+    <li><a href="implementation.html">Implementation</a></li>
+    <li><a href="source-code.html">Source code</a></li>
+    <li><a href="screenshots.html">Screenshots</a></li>
+    <li><a href="lessons-learned.html">Lessons learned</a></li>
+  </ol>
+</div>
+
+<p>A simulated banking pipeline that processes customer KYC (Know Your Customer) records and
+transaction data, modeled on the kind of validation and reporting workflows used in
+regulated financial environments.</p>
+
+<p>Incoming KYC documents and transaction batches land in Amazon S3, where AWS Step Functions
+coordinates a series of Lambda and Glue (PySpark) jobs: validating required KYC fields,
+flagging incomplete or high-risk records, deduplicating transactions, and rolling everything
+up into curated tables used for regulatory-style reporting.</p>
+
+<h2>Why this project</h2>
+<p>Built to reflect real banking/fintech data engineering work &mdash; KYC pipelines and
+regulatory reporting &mdash; with an emphasis on data quality, auditability, and correctness
+over raw throughput.</p>

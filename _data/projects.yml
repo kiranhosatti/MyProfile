@@ -1,0 +1,63 @@
+- slug: multicloud
+  order: 1
+  title: "Multi-Cloud Data Engineering Pipeline"
+  short: "REST API &rarr; Azure Data Lake Storage Gen2 &rarr; Databricks Bronze/Silver/Gold &rarr; AWS S3 &rarr; AWS Glue &rarr; Amazon Athena."
+  infobox:
+    - ["Category", "Multi-cloud batch ETL"]
+    - ["Clouds", "Azure, AWS"]
+    - ["Compute", "Databricks (PySpark)"]
+    - ["Storage", "ADLS Gen2, Amazon S3"]
+    - ["Catalog", "AWS Glue"]
+    - ["Query", "Amazon Athena"]
+    - ["CI/CD", "GitHub Actions"]
+    - ["Pattern", "Medallion (Bronze/Silver/Gold)"]
+
+- slug: banking
+  order: 2
+  title: "Banking KYC Pipeline"
+  short: "Banking KYC &amp; Transaction Processing Pipeline built on AWS with PySpark."
+  infobox:
+    - ["Category", "Banking / Fintech"]
+    - ["Cloud", "AWS"]
+    - ["Compute", "AWS Glue, PySpark"]
+    - ["Storage", "Amazon S3"]
+    - ["Orchestration", "AWS Step Functions"]
+    - ["Query / DW", "Athena, Redshift"]
+    - ["Pattern", "Medallion (Bronze/Silver/Gold)"]
+    - ["Domain focus", "KYC, regulatory reporting"]
+
+- slug: retail
+  order: 3
+  title: "Retail Sales Analytics Pipeline"
+  short: "Production-style Retail Sales ETL pipeline using AWS, PySpark and Apache Airflow."
+  infobox:
+    - ["Category", "E-commerce / Retail analytics"]
+    - ["Cloud", "AWS"]
+    - ["Compute", "PySpark (Glue/EMR)"]
+    - ["Storage", "Amazon S3"]
+    - ["Orchestration", "Apache Airflow"]
+    - ["Query / DW", "Athena, Redshift"]
+    - ["Pattern", "Medallion (Bronze/Silver/Gold)"]
+    - ["Schedule", "Daily batch"]
+
+- slug: weather
+  order: 4
+  title: "Weather Data Pipeline"
+  short: "Serverless weather data ingestion using AWS Lambda and GitHub Actions."
+  infobox:
+    - ["Category", "Serverless ingestion"]
+    - ["Cloud", "AWS"]
+    - ["Compute", "AWS Lambda"]
+    - ["Storage", "Amazon S3"]
+    - ["Source", "Open-Meteo public API"]
+    - ["Trigger", "Amazon EventBridge (scheduled)"]
+    - ["CI/CD", "GitHub Actions"]
+    - ["Infra as code", "AWS CloudFormation"]
+
+# To add a new project:
+# 1. Add an entry here (slug, order, title, short, infobox).
+# 2. Create projects/<slug>/ with the same 6 files as an existing project
+#    (index.html, architecture.html, implementation.html, source-code.html,
+#    screenshots.html, lessons-learned.html) and an assets/ folder.
+# The header, nav, infobox and sub-navigation on those 6 pages are automatic —
+# only the actual written content needs filling in.

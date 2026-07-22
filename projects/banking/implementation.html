@@ -1,0 +1,17 @@
+---
+layout: project
+project: banking
+page_type: implementation
+active: Projects
+title: "Banking KYC Pipeline — Implementation"
+subtitle: "Implementation"
+---
+<h2>Implementation notes</h2>
+<p>Step Functions is the backbone of this pipeline: each stage (validate, dedupe, aggregate)
+is a distinct state, with explicit retry policies and a catch-all error state that routes
+failures to a dead-letter queue for manual review rather than failing silently.</p>
+<p>KYC validation rules (required fields, ID format checks, basic risk flags) live in a PySpark
+job run through Glue, kept separate from the transaction-processing job so each can be tested
+and scaled independently.</p>
+<p>Because this pipeline handles data modeled on personal and financial information, sample
+data is entirely synthetic and no real customer data is used anywhere in the project.</p>

@@ -1,0 +1,46 @@
+---
+layout: project
+project: multicloud
+page_type: source-code
+active: Projects
+title: "Multi-Cloud Data Engineering Pipeline — Source Code"
+subtitle: "Source Code"
+---
+<div class="stub-note">Representative excerpts shown here. Full source lives in the project's GitHub repository &mdash; link to be added.</div>
+<h2>Key snippets</h2>
+<h3>Bronze &rarr; Silver transform (PySpark)</h3>
+<pre><code>from pyspark.sql import functions as F
+
+bronze_df = spark.read.format("delta").table("bronze.api_events")
+
+silver_df = (
+    bronze_df
+    .dropDuplicates(["event_id"])
+    .withColumn("event_ts", F.to_timestamp("event_ts"))
+    .withColumn("amount", F.col("amount").cast("decimal(18,2)"))
+    .filter(F.col("event_id").isNotNull())
+)
+
+(silver_df.write
+    .format("delta")
+    .mode("overwrite")
+    .option("mergeSchema", "true")
+    .saveAsTable("silver.api_events"))
+</code></pre>
+<h3>Glue crawler definition (excerpt)</h3>
+<pre><code>{
+  "Name": "gold-zone-crawler",
+  "Role": "arn:aws:iam::&lt;account-id&gt;:role/GlueCrawlerRole",
+  "DatabaseName": "multicloud_gold",
+  "Targets": {
+    "S3Targets": [
+      { "Path": "s3://multicloud-pipeline/gold/" }
+    ]
+  },
+  "SchemaChangePolicy": {
+    "UpdateBehavior": "UPDATE_IN_DATABASE",
+    "DeleteBehavior": "LOG"
+  },
+  "Schedule": "cron(0 3 * * ? *)"
+}
+</code></pre>

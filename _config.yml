@@ -1,0 +1,15 @@
+title: "Kiran P"
+tagline: "Data Engineering Documentation & Project Knowledge Base"
+
+# If this repo is NOT named <username>.github.io, GitHub Pages serves it at
+# https://<username>.github.io/<repo-name>/ instead of the domain root, so every
+# internal link needs that prefix. Set it here — every page picks it up automatically.
+# Repo is "MyProfile" -> baseurl is "/MyProfile".
+# If you later rename the repo to kiranp.github.io (or move this to the root
+# username.github.io repo), just change this to an empty string: baseurl: ""
+baseurl: "/MyProfile"
+
+# GitHub Pages builds this automatically on push — no local build step needed.
+# markdown/theme settings kept minimal on purpose since this site uses its own
+# plain layouts in _layouts/ rather than a remote theme.
+markdown: kramdown

@@ -1,0 +1,17 @@
+---
+layout: project
+project: multicloud
+page_type: implementation
+active: Projects
+title: "Multi-Cloud Data Engineering Pipeline — Implementation"
+subtitle: "Implementation"
+---
+<h2>Implementation notes</h2>
+<p>The Databricks side is organized as three notebooks (Bronze, Silver, Gold), each scheduled
+as a Databricks Job with the next stage depending on the previous one completing successfully.
+Incremental loads are handled with a simple watermark column so that re-running a job doesn't
+duplicate already-processed records.</p>
+<p>GitHub Actions is used to deploy notebook and job configuration changes, rather than editing
+jobs directly in the Databricks workspace, so that changes are reviewed and versioned.</p>
+<p>The AWS side is intentionally lightweight: a Glue crawler on a schedule, and Athena as the
+query layer, so the cross-cloud handoff doesn't require standing up additional compute.</p>

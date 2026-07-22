@@ -1,0 +1,15 @@
+---
+layout: project
+project: retail
+page_type: lessons-learned
+active: Projects
+title: "Retail Sales Analytics Pipeline — Lessons Learned"
+subtitle: "Lessons Learned"
+---
+<h2>What I'd tell someone starting this project</h2>
+<ul>
+<li>Making every task idempotent (safe to re-run for the same logical date) turned backfills from a risky manual process into a routine DAG re-trigger.</li>
+<li>A handful of stores had wildly skewed sales volume, which caused uneven Spark partition sizes; repartitioning by a combination of store and date fixed the straggler tasks.</li>
+<li>Airflow SLAs and alerting caught a silently-stalled sensor early in development that would otherwise have delayed the whole day's pipeline.</li>
+<li>Keeping data-quality checks as separate, visible DAG tasks (rather than buried inside the transform code) made failures much easier to diagnose.</li>
+</ul>

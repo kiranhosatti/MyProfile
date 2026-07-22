@@ -1,0 +1,23 @@
+---
+layout: project
+project: multicloud
+page_type: architecture
+active: Projects
+title: "Multi-Cloud Data Engineering Pipeline — Architecture"
+subtitle: "Architecture"
+---
+<h2>Pipeline stages</h2>
+<h3>1. Ingestion</h3>
+<p>A scheduled job calls the source REST API and writes the raw JSON response into the raw zone of Azure Data Lake Storage Gen2.</p>
+<h3>2. Bronze (Databricks)</h3>
+<p>A Databricks notebook reads the raw files as-is (schema-on-read) and writes them out as Delta tables, preserving the original structure and adding ingestion metadata (load timestamp, source file).</p>
+<h3>3. Silver (Databricks)</h3>
+<p>A second notebook cleans and conforms the Bronze data: type casting, null handling, deduplication, and flattening of nested JSON fields into a tabular structure.</p>
+<h3>4. Gold (Databricks)</h3>
+<p>Business-level aggregates and dimensional tables are built from Silver, ready for consumption.</p>
+<h3>5. Cross-cloud handoff</h3>
+<p>Gold Delta tables are exported and copied into an Amazon S3 bucket, which acts as the boundary between the Azure and AWS sides of the pipeline.</p>
+<h3>6. Cataloging (AWS Glue)</h3>
+<p>An AWS Glue crawler scans the S3 Gold zone and registers the tables and their schemas in the Glue Data Catalog.</p>
+<h3>7. Serving (Athena)</h3>
+<p>Amazon Athena queries the Gold tables directly against S3 via the Glue Catalog, with no additional data movement required.</p>

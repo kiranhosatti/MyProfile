@@ -1,0 +1,12 @@
+<header class="sitehead">
+  <div class="headrow">
+    <h1><a href="{{ site.baseurl }}/" style="color:inherit;">{{ site.title }}</a></h1>
+    <span class="tagline">{{ site.tagline }}</span>
+  </div>
+  <nav class="tabs">
+    <a class="{% if page.active == 'Home' %}active{% endif %}" href="{{ site.baseurl }}/">Home</a>
+    <a class="{% if page.active == 'Projects' %}active{% endif %}" href="{{ site.baseurl }}/projects/">Projects</a>
+    <a href="{{ site.baseurl }}/#about">About</a>
+    <a href="{{ site.baseurl }}/#contact">Contact</a>
+  </nav>
+</header>

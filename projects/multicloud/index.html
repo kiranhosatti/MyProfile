@@ -1,0 +1,31 @@
+---
+layout: project
+project: multicloud
+page_type: overview
+active: Projects
+title: "Multi-Cloud Data Engineering Pipeline"
+---
+<div class="toc">
+  <div class="toc-title">Contents</div>
+  <ol>
+    <li><a href="architecture.html">Architecture</a></li>
+    <li><a href="implementation.html">Implementation</a></li>
+    <li><a href="source-code.html">Source code</a></li>
+    <li><a href="screenshots.html">Screenshots</a></li>
+    <li><a href="lessons-learned.html">Lessons learned</a></li>
+  </ol>
+</div>
+
+<p>This project pulls data from a REST API and moves it through two clouds end to end:
+raw ingestion into Azure, transformation in Databricks, and final serving from AWS. The goal
+was to get hands-on with a realistic scenario where an organization has existing investment
+in Azure for data engineering but standardizes on AWS for analytics and BI tooling.</p>
+
+<p>The pipeline follows a Medallion Architecture (Bronze &rarr; Silver &rarr; Gold) inside
+Databricks, then hands the curated Gold layer off to AWS, where AWS Glue catalogs it and
+Amazon Athena serves it for SQL-based analysis.</p>
+
+<h2>Why this project</h2>
+<p>Most portfolio pipelines stay inside a single cloud. This one was built specifically to
+practice cross-cloud data movement, credential/network boundaries, and keeping a single
+source of truth for schema and data quality when two ecosystems are involved.</p>

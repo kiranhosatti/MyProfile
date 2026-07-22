@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>{{ page.title }} | {{ site.title }}</title>
+<link rel="stylesheet" href="{{ site.baseurl }}/css/style.css">
+</head>
+<body>
+{% include header.html %}
+{% if page.project %}
+{% assign proj = site.data.projects | where: "slug", page.project | first %}
+<div class="breadcrumb">
+  <a href="{{ site.baseurl }}/">Home</a> &raquo;
+  <a href="{{ site.baseurl }}/projects/">Projects</a> &raquo;
+  {% if page.page_type == 'overview' %}{{ proj.title }}{% else %}<a href="{{ site.baseurl }}/projects/{{ proj.slug }}/">{{ proj.title }}</a> &raquo; {{ page.subtitle }}{% endif %}
+</div>
+{% elsif page.active == 'Projects' %}
+<div class="breadcrumb"><a href="{{ site.baseurl }}/">Home</a> &raquo; Projects</div>
+{% endif %}
+<div class="wrap">
+{{ content }}
+</div>
+{% include footer.html %}
+</body>
+</html>

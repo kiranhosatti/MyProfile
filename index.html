@@ -1,0 +1,40 @@
+---
+layout: default
+title: Home
+active: Home
+---
+<h1 class="title">{{ site.title }}</h1>
+
+<h2 id="about">About</h2>
+<p>This site documents my end-to-end data engineering projects: architectures,
+implementation notes, code, and lessons learned while building production-style
+data pipelines using Azure, AWS, Databricks, PySpark, Airflow, and SQL.</p>
+
+<h2>Current projects</h2>
+<div class="card-grid">
+{% assign projects = site.data.projects | sort: "order" %}
+{% for p in projects %}
+<div class="card">
+  <h3>{{ p.title }}</h3>
+  <p>{{ p.short }}</p>
+  <a href="{{ site.baseurl }}/projects/{{ p.slug }}/">Open documentation &rarr;</a>
+</div>
+{% endfor %}
+</div>
+<p><a href="{{ site.baseurl }}/projects/">View all projects &rarr;</a></p>
+
+<h2>Technology stack</h2>
+<table class="wikitable">
+<tr><th>Category</th><th>Technologies</th></tr>
+<tr><td>Programming</td><td>Python, SQL</td></tr>
+<tr><td>Cloud</td><td>Azure, AWS</td></tr>
+<tr><td>Storage</td><td>Azure ADLS Gen2, Amazon S3</td></tr>
+<tr><td>Processing</td><td>Databricks, PySpark</td></tr>
+<tr><td>Workflow</td><td>Apache Airflow, AWS Step Functions</td></tr>
+<tr><td>Database</td><td>MySQL, Amazon Redshift</td></tr>
+<tr><td>Analytics</td><td>Amazon Athena</td></tr>
+<tr><td>CI/CD</td><td>GitHub Actions</td></tr>
+</table>
+
+<h2 id="contact">Contact</h2>
+<p>Reach out via <a href="https://github.com/">GitHub</a> or LinkedIn (links to be added).</p>

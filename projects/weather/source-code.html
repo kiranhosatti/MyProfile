@@ -1,0 +1,57 @@
+---
+layout: project
+project: weather
+page_type: source-code
+active: Projects
+title: "Weather Data Pipeline — Source Code"
+subtitle: "Source Code"
+---
+<div class="stub-note">Representative excerpts shown here. Full source lives in the project's GitHub repository &mdash; link to be added.</div>
+<h2>Key snippets</h2>
+<h3>Lambda handler: fetch + write to S3</h3>
+<pre><code>import json
+import urllib.request
+import boto3
+from datetime import datetime
+
+s3 = boto3.client("s3")
+BUCKET = "weather-pipeline-raw"
+
+def lambda_handler(event, context):
+    url = (
+        "https://api.open-meteo.com/v1/forecast"
+        "?latitude=12.97&amp;longitude=77.59&amp;current_weather=true"
+    )
+    with urllib.request.urlopen(url) as response:
+        data = json.loads(response.read())
+
+    now = datetime.utcnow()
+    key = f"raw/{now:%Y/%m/%d}/{now:%H}.json"
+    s3.put_object(Bucket=BUCKET, Key=key, Body=json.dumps(data))
+
+    return {"statusCode": 200, "key": key}
+</code></pre>
+<h3>GitHub Actions: build and deploy (excerpt)</h3>
+<pre><code>name: deploy-lambda
+on:
+  push:
+    branches: [main]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-region: ap-south-1
+          role-to-assume: ${{ secrets.AWS_DEPLOY_ROLE }}
+      - name: Package pandas layer
+        run: ./scripts/build_layer.sh
+      - name: Deploy stack
+        run: |
+          aws cloudformation deploy \
+            --template-file template.yaml \
+            --stack-name weather-pipeline \
+            --capabilities CAPABILITY_IAM
+</code></pre>

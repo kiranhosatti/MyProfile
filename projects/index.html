@@ -1,0 +1,19 @@
+---
+layout: default
+title: Projects
+active: Projects
+---
+<h1 class="title">Projects</h1>
+<p>Data engineering projects, each documented as its own set of pages:
+overview, architecture, implementation, source code, screenshots, and lessons learned.</p>
+
+<div class="card-grid">
+{% assign projects = site.data.projects | sort: "order" %}
+{% for p in projects %}
+<div class="card">
+  <h3>{{ p.title }}</h3>
+  <p>{{ p.short }}</p>
+  <a href="{{ site.baseurl }}/projects/{{ p.slug }}/">Open documentation &rarr;</a>
+</div>
+{% endfor %}
+</div>

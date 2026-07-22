@@ -1,0 +1,21 @@
+---
+layout: project
+project: banking
+page_type: architecture
+active: Projects
+title: "Banking KYC Pipeline — Architecture"
+subtitle: "Architecture"
+---
+<h2>Pipeline stages</h2>
+<h3>1. Ingestion</h3>
+<p>KYC documents and transaction batch files are uploaded to an S3 raw zone, which triggers a Lambda function via an S3 event notification.</p>
+<h3>2. Orchestration</h3>
+<p>The Lambda function starts a Step Functions execution that coordinates the rest of the pipeline as a state machine, with retry and error-handling states built in.</p>
+<h3>3. Bronze</h3>
+<p>Raw KYC and transaction records are copied as-is into a Bronze zone in S3, partitioned by ingestion date.</p>
+<h3>4. Silver</h3>
+<p>A Glue (PySpark) job validates required KYC fields, checks values against expected formats, flags incomplete records, and deduplicates transactions by transaction ID.</p>
+<h3>5. Gold</h3>
+<p>Curated tables are produced: a customer risk/completeness summary and a cleaned transaction ledger, both ready for reporting.</p>
+<h3>6. Serving</h3>
+<p>Gold tables are queried through Athena for ad hoc analysis and loaded into Redshift for structured regulatory-style reporting.</p>

@@ -1,0 +1,31 @@
+---
+layout: project
+project: weather
+page_type: overview
+active: Projects
+title: "Weather Data Pipeline"
+---
+<div class="toc">
+  <div class="toc-title">Contents</div>
+  <ol>
+    <li><a href="architecture.html">Architecture</a></li>
+    <li><a href="implementation.html">Implementation</a></li>
+    <li><a href="source-code.html">Source code</a></li>
+    <li><a href="screenshots.html">Screenshots</a></li>
+    <li><a href="lessons-learned.html">Lessons learned</a></li>
+  </ol>
+</div>
+
+<p>A small serverless pipeline that pulls current and forecast weather data from the
+free Open-Meteo API on a schedule, using a single AWS Lambda function, and lands both raw
+and processed data in Amazon S3.</p>
+
+<p>An EventBridge scheduled rule triggers the Lambda function, which calls the API, writes
+the raw JSON response to a raw zone in S3, then converts it to Parquet (using a pandas
+Lambda layer) for a processed zone. Infrastructure is defined in CloudFormation, and GitHub
+Actions builds, tests and deploys the Lambda function and its layer on every push.</p>
+
+<h2>Why this project</h2>
+<p>This was the first fully serverless, fully automated pipeline in the portfolio &mdash;
+built to get comfortable with Lambda packaging, layer size limits, and a real CI/CD
+deployment loop rather than manual console deploys.</p>

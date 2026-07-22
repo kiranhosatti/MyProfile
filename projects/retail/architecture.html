@@ -1,0 +1,23 @@
+---
+layout: project
+project: retail
+page_type: architecture
+active: Projects
+title: "Retail Sales Analytics Pipeline — Architecture"
+subtitle: "Architecture"
+---
+<h2>Pipeline stages</h2>
+<h3>1. Ingestion</h3>
+<p>Daily sales export files (one per store) are dropped into an S3 raw zone by an upstream (simulated) point-of-sale system.</p>
+<h3>2. Sensing</h3>
+<p>An Airflow DAG uses a sensor to detect that the day's files have all landed before triggering downstream tasks.</p>
+<h3>3. Bronze</h3>
+<p>A PySpark task reads the raw files and writes them to a Bronze zone, partitioned by sale date and store.</p>
+<h3>4. Silver</h3>
+<p>A PySpark task cleans and conforms the data: currency normalization, deduplication of line items, and joins against product and store dimension tables.</p>
+<h3>5. Gold</h3>
+<p>Aggregated tables are built &mdash; daily sales by store, by category, and month-to-date rollups.</p>
+<h3>6. Data quality checks</h3>
+<p>Row-count and null-rate checks run between each layer; the DAG fails fast and alerts if a check doesn't pass.</p>
+<h3>7. Serving</h3>
+<p>Gold tables are queried via Athena for exploration and loaded into Redshift for dashboarding.</p>

@@ -1,0 +1,17 @@
+---
+layout: project
+project: retail
+page_type: implementation
+active: Projects
+title: "Retail Sales Analytics Pipeline — Implementation"
+subtitle: "Implementation"
+---
+<h2>Implementation notes</h2>
+<p>The Airflow DAG is organized as one task per Medallion layer (bronze_task, silver_task,
+gold_task), each a <code>PythonOperator</code>/<code>SparkSubmitOperator</code> pair, with
+explicit upstream/downstream dependencies and a file sensor at the front of the DAG.</p>
+<p>Partitioning by sale date keeps daily runs cheap and makes backfilling a specific date range
+straightforward &mdash; a backfill is just re-triggering the DAG for those logical dates.</p>
+<p>Data-quality checks are implemented as their own DAG tasks between layers, comparing row
+counts and null rates against the previous run rather than hardcoded thresholds, so the checks
+adapt as data volume grows.</p>

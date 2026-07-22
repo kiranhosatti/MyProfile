@@ -1,0 +1,15 @@
+---
+layout: project
+project: banking
+page_type: lessons-learned
+active: Projects
+title: "Banking KYC Pipeline — Lessons Learned"
+subtitle: "Lessons Learned"
+---
+<h2>What I'd tell someone starting this project</h2>
+<ul>
+<li>Idempotent Lambda triggers mattered a lot here &mdash; S3 can occasionally deliver duplicate event notifications, so every downstream step needed to tolerate being run twice.</li>
+<li>Step Functions' built-in retry and catch blocks removed a surprising amount of custom error-handling code compared to chaining Lambdas directly.</li>
+<li>Athena was the right tool for ad hoc exploration, but Redshift's star schema was a better fit once reporting needed repeatable joins across customers, accounts, and transactions.</li>
+<li>Treating PII carefully from day one (synthetic data only, least-privilege IAM roles) was far easier than retrofitting it later.</li>
+</ul>

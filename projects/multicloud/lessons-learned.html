@@ -1,0 +1,15 @@
+---
+layout: project
+project: multicloud
+page_type: lessons-learned
+active: Projects
+title: "Multi-Cloud Data Engineering Pipeline — Lessons Learned"
+subtitle: "Lessons Learned"
+---
+<h2>What I'd tell someone starting this project</h2>
+<ul>
+<li>Schema drift between Bronze and Silver needed an explicit, version-controlled contract &mdash; letting Delta's schema evolution handle everything silently caused surprises downstream.</li>
+<li>Moving data between clouds has a real dollar and latency cost; batching the Gold export rather than syncing continuously kept this manageable.</li>
+<li>Without a single cross-cloud orchestrator, dependency management between the Databricks side and the Glue/Athena side had to be handled with clear success markers (e.g. a _SUCCESS file) rather than a shared scheduler.</li>
+<li>Right-sizing the Databricks cluster mattered more than expected &mdash; an oversized cluster for a small daily dataset was the single biggest avoidable cost in the whole pipeline.</li>
+</ul>

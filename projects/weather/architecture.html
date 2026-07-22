@@ -1,0 +1,21 @@
+---
+layout: project
+project: weather
+page_type: architecture
+active: Projects
+title: "Weather Data Pipeline — Architecture"
+subtitle: "Architecture"
+---
+<h2>Pipeline stages</h2>
+<h3>1. Trigger</h3>
+<p>An Amazon EventBridge scheduled rule invokes the Lambda function on a fixed interval (e.g. hourly).</p>
+<h3>2. Fetch</h3>
+<p>The Lambda function calls the Open-Meteo public API for a fixed set of locations and receives the current and forecast weather data as JSON.</p>
+<h3>3. Raw storage</h3>
+<p>The raw JSON response is written directly to an S3 raw zone, partitioned by date and hour, before any transformation.</p>
+<h3>4. Transform</h3>
+<p>The same Lambda function (using a pandas Lambda layer) flattens and converts the JSON into Parquet.</p>
+<h3>5. Processed storage</h3>
+<p>Parquet output is written to a processed zone in S3, ready for querying with Athena.</p>
+<h3>6. CI/CD</h3>
+<p>On every push to the repository, a GitHub Actions workflow packages the Lambda function and its pandas layer, and deploys both via CloudFormation.</p>
